@@ -29,6 +29,13 @@ git clone https://github.com/Openwrt-Passwall/openwrt-passwall2 package/passwall
 # Modify default IP
 sed -i 's/192.168.6.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 
+# Force daed to v1.27.0 (latest official release from daeuniverse/daed)
+if [ -f feeds/packages/net/daed/Makefile ]; then
+    sed -i 's|PKG_VERSION:=1\.[0-9]*\.[0-9]*|PKG_VERSION:=1.27.0|' feeds/packages/net/daed/Makefile
+    sed -i 's|PKG_RELEASE:=.*|PKG_RELEASE:=1|' feeds/packages/net/daed/Makefile
+    echo "daed Makefile bumped to 1.27.0"
+fi
+
 # defconfig
 # cp -f ../.config .config
 # cp -f defconfig/mt7981-ax3000.config .config
